@@ -28,6 +28,7 @@ function loadMqttPage() {
     document.getElementById("mqttPort").value = cfg.port || 8884;
     document.getElementById("mqttUser").value = cfg.user || "";
     document.getElementById("mqttUuid").value = cfg.uuid || "";
+    autoConnect(null, () => _refreshBadge(), () => _refreshBadge());
     _refreshBadge();
 }
 

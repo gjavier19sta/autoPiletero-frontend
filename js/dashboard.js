@@ -1,12 +1,20 @@
 function dashInfo() {
     const ok = autoConnect(
-        (data) => syncStatus(data),
+        (data) => {
+            console.log("[dashboard] status recibido:", data);
+            syncStatus(data);
+        },
         () => {
+            console.log("[dashboard] conectado al broker");
             _setDeviceBadge(true);
             sendCommand({ cmd: "get_status" });
         },
-        () => _setDeviceBadge(false)
+        () => {
+            console.log("[dashboard] desconectado del broker");
+            _setDeviceBadge(false);
+        }
     );
+    console.log("[dashboard] autoConnect retornó:", ok);
     if (!ok) showStatus("Configurá la conexión MQTT primero → menú Configurar Conexión", "red", 60);
 }
 
