@@ -97,7 +97,7 @@ function irAlScheduler() {
         origen:               "pileta"
     });
 
-    window.location.href = "/pages/scheduler.html?" + params.toString();
+    window.location.href = "scheduler.html?" + params.toString();
 }
 
 function loadPiletaConfig() {
