@@ -31,13 +31,15 @@ function connect(config, onStatus, onConnected, onDisconnected) {
 
     _client.on("message", (topic, payload) => {
         if (topic !== _topicStatus) return;
+        let data;
         try {
-            const data = JSON.parse(payload.toString());
-            window.appState.status = data;
-            if (_cb.onStatus) _cb.onStatus(data);
+            data = JSON.parse(payload.toString());
         } catch (e) {
             console.error("MQTT parse error:", e);
+            return;
         }
+        window.appState.status = data;
+        if (_cb.onStatus) _cb.onStatus(data);
     });
 
     _client.on("close", () => {
