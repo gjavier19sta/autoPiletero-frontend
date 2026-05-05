@@ -25,12 +25,12 @@ function loadConfig() {
 
 function _populateForm(data) {
     // ── Cloro ──
-    document.getElementById("duracionDosificacionCloro").value = data.duracionDosificacion || "";
-    document.getElementById("dosificacionModeCloro").value     = data.dosificacionMode || "mililitro";
-    document.getElementById("intervalCloro").value             = data.intervalMin || "";
-    document.getElementById("hourCloro").value                 = data.hora    != null ? data.hora    : 0;
-    document.getElementById("minuteCloro").value               = data.minutos != null ? data.minutos : 0;
-    document.getElementById("modeCloro").value                 = data.schedulerMode || "INTERVAL";
+    document.getElementById("duracionDosificacionCloro").value = data.duracionDosificacionCloro || "";
+    document.getElementById("dosificacionModeCloro").value     = data.dosificacionModeCloro || "mililitro";
+    document.getElementById("intervalCloro").value             = data.intervalMinCloro || "";
+    document.getElementById("hourCloro").value                 = data.horaCloro    != null ? data.horaCloro    : 0;
+    document.getElementById("minuteCloro").value               = data.minutosCloro != null ? data.minutosCloro : 0;
+    document.getElementById("modeCloro").value                 = data.schedulerModeCloro || "INTERVAL";
 
     // ── Alguicida ──
     document.getElementById("duracionDosificacionAlguicida").value = data.duracionDosificacionAlguicida || "";
@@ -87,7 +87,7 @@ function onModeChangeSuffix(suffix) {
 function onDosimodeChangeSuffix(suffix) {
     const flujoKey = suffix === "Alguicida"    ? "flujoBombaAlguicida"
                    : suffix === "Clarificante" ? "flujoBombaClarificante"
-                   : "flujoBomba";
+                   : "flujoBombaCloro";
 
     const modo    = document.getElementById("dosificacionMode"      + suffix).value;
     const duracion = parseFloat(document.getElementById("duracionDosificacion" + suffix).value);
@@ -113,7 +113,7 @@ function setupInterval(suffix, bomba) {
 
     const flujoKey             = suffix === "Alguicida"    ? "flujoBombaAlguicida"
                                : suffix === "Clarificante" ? "flujoBombaClarificante"
-                               : "flujoBomba";
+                               : "flujoBombaCloro";
     const intervalTime         = document.getElementById("interval"             + suffix).value;
     const duracionDosificacion = document.getElementById("duracionDosificacion" + suffix).value;
     const dosificacionMode     = document.getElementById("dosificacionMode"     + suffix).value;

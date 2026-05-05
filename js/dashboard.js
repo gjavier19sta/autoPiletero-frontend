@@ -1,20 +1,12 @@
 function dashInfo() {
     const ok = autoConnect(
-        (data) => {
-            console.log("[dashboard] status recibido:", data);
-            syncStatus(data);
-        },
+        (data) => syncStatus(data),
         () => {
-            console.log("[dashboard] conectado al broker");
             _setDeviceBadge(true);
             sendCommand({ cmd: "get_status" });
         },
-        () => {
-            console.log("[dashboard] desconectado del broker");
-            _setDeviceBadge(false);
-        }
+        () => _setDeviceBadge(false)
     );
-    console.log("[dashboard] autoConnect retornó:", ok);
     if (!ok) showStatus("Configurá la conexión MQTT primero → menú Configurar Conexión", "red", 60);
 }
 
@@ -31,11 +23,11 @@ function syncStatus(data) {
     _setDeviceBadge(data.online !== false);
 
     // Cloro
-    document.getElementById("estadoBombaCloro").innerText      = data.estadoBomba ? "ON" : "OFF";
-    document.getElementById("estadoBombaCloro").style.color    = data.estadoBomba ? "green" : "red";
-    document.getElementById("flujoBombaCloro").innerText       = data.flujoBomba || "--";
-    document.getElementById("duracionDosificacionCloro").value = data.duracionDosificacion || "";
-    document.getElementById("dosificacionModeCloro").value     = data.dosificacionMode || "mililitro";
+    document.getElementById("estadoBombaCloro").innerText      = data.estadoBombaCloro ? "ON" : "OFF";
+    document.getElementById("estadoBombaCloro").style.color    = data.estadoBombaCloro ? "green" : "red";
+    document.getElementById("flujoBombaCloro").innerText       = data.flujoBombaCloro || "--";
+    document.getElementById("duracionDosificacionCloro").value = data.duracionDosificacionCloro || "";
+    document.getElementById("dosificacionModeCloro").value     = data.dosificacionModeCloro || "mililitro";
 
     // Alguicida
     document.getElementById("estadoBombaAlguicida").innerText      = data.estadoBombaAlguicida ? "ON" : "OFF";
@@ -52,7 +44,7 @@ function syncStatus(data) {
     document.getElementById("dosificacionModeClarificante").value     = data.dosificacionModeClarificante || "mililitro";
 
     document.body.style.background =
-        (data.estadoBomba || data.estadoBombaAlguicida || data.estadoBombaClarificante) ? "#e6ffe6" : "white";
+        (data.estadoBombaCloro || data.estadoBombaAlguicida || data.estadoBombaClarificante) ? "#e6ffe6" : "white";
 }
 
 function dosificar(bomba) {

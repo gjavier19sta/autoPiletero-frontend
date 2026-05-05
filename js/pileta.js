@@ -85,7 +85,7 @@ function calcular() {
 function irAlScheduler() {
     if (!_dosisActual) return;
 
-    const dosificacionMode = window.appState.status ? window.appState.status.dosificacionMode : "mililitro";
+    const dosificacionMode = window.appState.status ? window.appState.status.dosificacionModeCloro : "mililitro";
 
     const params = new URLSearchParams({
         litros:               _litrosActual,
@@ -103,7 +103,7 @@ function irAlScheduler() {
 function loadPiletaConfig() {
     const ok = autoConnect(
         (data) => {
-            FLUJO_ML_POR_MIN = parseFloat(data.flujoBomba) || 0;
+            FLUJO_ML_POR_MIN = parseFloat(data.flujoBombaCloro) || 0;
 
             if (_piletaFormReady) return;
             _piletaFormReady = true;
