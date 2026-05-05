@@ -11,7 +11,7 @@
         <script src="../js/tiempo.js"></script>
         <script src="../js/api.js"></script>
         <script src="../js/mqtt.js"></script>
-        <script>window.onload = loadMqttPage();</script>
+        <script>window.onload = loadMqttPage;</script>
     </head>
 
     <body>
@@ -43,6 +43,10 @@
 
             Contraseña:<br>
             <input id="mqttPass" type="password" placeholder="(dejar vacío para no cambiar)"><br><br>
+
+            UUID del dispositivo:<br>
+            <input id="mqttUuid" type="text" placeholder="ej: ecb32c94-65ca-4925-bdf9-a72ee7d84333"
+                   style="width:100%;box-sizing:border-box;"><br><br>
 
             <button onclick="guardarMqtt()">Guardar y conectar</button>
         </div>

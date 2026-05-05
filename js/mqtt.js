@@ -15,7 +15,7 @@ function saveCredentials(cfg) {
 // Called by every page on load. Returns false if no credentials configured.
 function autoConnect(onStatus, onConnected, onDisconnected) {
     const cfg = loadCredentials();
-    if (!cfg || !cfg.host || !cfg.user) return false;
+    if (!cfg || !cfg.host || !cfg.user || !cfg.uuid) return false;
     connect(cfg, onStatus, onConnected, onDisconnected);
     return true;
 }
@@ -27,6 +27,7 @@ function loadMqttPage() {
     document.getElementById("mqttHost").value = cfg.host || "56d8a77abca04cab87702c63c7838867.s1.eu.hivemq.cloud";
     document.getElementById("mqttPort").value = cfg.port || 8884;
     document.getElementById("mqttUser").value = cfg.user || "";
+    document.getElementById("mqttUuid").value = cfg.uuid || "";
     _refreshBadge();
 }
 
@@ -35,12 +36,14 @@ function guardarMqtt() {
     const port     = parseInt(document.getElementById("mqttPort").value, 10);
     const user     = document.getElementById("mqttUser").value.trim();
     const passInput = document.getElementById("mqttPass").value;
+    const uuid     = document.getElementById("mqttUuid").value.trim();
 
     if (!host || !user) { showStatus("Host y usuario son requeridos", "red"); return; }
     if (isNaN(port) || port <= 0) { showStatus("Puerto inválido", "red"); return; }
+    if (!uuid) { showStatus("UUID del dispositivo es requerido", "red"); return; }
 
     const existing = loadCredentials() || {};
-    const cfg = { host, port, user, pass: passInput || existing.pass || "" };
+    const cfg = { host, port, user, pass: passInput || existing.pass || "", uuid };
     saveCredentials(cfg);
 
     disconnect();

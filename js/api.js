@@ -4,8 +4,8 @@
 
 window.appState = window.appState || { status: null };
 
-const _TOPIC_STATUS = "autopiletero/ecb32c94-65ca-4925-bdf9-a72ee7d84333/status";
-const _TOPIC_CMD    = "autopiletero/ecb32c94-65ca-4925-bdf9-a72ee7d84333/cmd";
+let _topicStatus = null;
+let _topicCmd    = null;
 
 let _client = null;
 let _cb = { onStatus: null, onConnected: null, onDisconnected: null };
@@ -13,6 +13,8 @@ let _cb = { onStatus: null, onConnected: null, onDisconnected: null };
 function connect(config, onStatus, onConnected, onDisconnected) {
     if (_client) _client.end(true);
 
+    _topicStatus = `autopiletero/${config.uuid}/status`;
+    _topicCmd    = `autopiletero/${config.uuid}/cmd`;
     _cb = { onStatus, onConnected, onDisconnected };
 
     _client = mqtt.connect(`wss://${config.host}:${config.port}/mqtt`, {
@@ -23,12 +25,12 @@ function connect(config, onStatus, onConnected, onDisconnected) {
     });
 
     _client.on("connect", () => {
-        _client.subscribe(_TOPIC_STATUS);
+        _client.subscribe(_topicStatus);
         if (_cb.onConnected) _cb.onConnected();
     });
 
     _client.on("message", (topic, payload) => {
-        if (topic !== _TOPIC_STATUS) return;
+        if (topic !== _topicStatus) return;
         try {
             const data = JSON.parse(payload.toString());
             window.appState.status = data;
@@ -49,7 +51,7 @@ function connect(config, onStatus, onConnected, onDisconnected) {
 
 function sendCommand(cmd) {
     if (!isConnected()) { console.warn("sendCommand: not connected"); return; }
-    _client.publish(_TOPIC_CMD, JSON.stringify(cmd));
+    _client.publish(_topicCmd, JSON.stringify(cmd));
 }
 
 function disconnect() {
