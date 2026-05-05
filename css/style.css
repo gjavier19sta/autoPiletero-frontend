@@ -58,6 +58,18 @@ body {
     background-color: #f0f0f0;
 }
 
+.home-link {
+    display: inline-block;
+    margin: 10px 12px 0;
+    text-decoration: none;
+    color: #2196F3;
+    font-size: 0.95em;
+    font-weight: bold;
+}
+.home-link:hover {
+    text-decoration: underline;
+}
+
 /* Estilo básico para mostrar el icono web */
 .logo-container {
     text-align: center;
