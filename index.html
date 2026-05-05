@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AutoPiletero</title>
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="icon" type="image/png" href="/images/favicon.png">
+        <script src="https://unpkg.com/mqtt@5/dist/mqtt.min.js"></script>
+        <script src="/js/version.js"></script>
+        <script src="/js/tiempo.js"></script>
+        <script src="/js/api.js"></script>
+        <script src="/js/mqtt.js"></script>
+        <script>
+            window.onload = function () {
+                const ok = autoConnect(
+                    null,
+                    () => {
+                        const el = document.getElementById("connStatus");
+                        el.innerText = "● Conectado";
+                        el.style.color = "green";
+                    },
+                    () => {
+                        const el = document.getElementById("connStatus");
+                        el.innerText = "● Desconectado";
+                        el.style.color = "red";
+                    }
+                );
+                if (!ok) {
+                    const el = document.getElementById("connStatus");
+                    el.innerText = "● Sin configurar";
+                    el.style.color = "gray";
+                }
+            };
+        </script>
+    </head>
+    <body>
+        <div class="logo-container">
+            <img src="/images/logo.png" alt="Autopiletero Logo" class="main-logo">
+        </div>
+        <h1>Dosificador Piscina</h1>
+        <div>
+            <span id="horaDelDia">--:--:--</span><br>
+            <small><span id="connStatus" style="color:gray;">● --</span></small>
+            <br><br>
+        </div>
+        <nav>
+            <a href="/pages/pileta.html">
+                <button>Configurar Pileta</button>
+            </a><br><br>
+
+            <a href="/pages/dashboard.html">
+                <button>Estado Bomba</button>
+            </a><br><br>
+
+            <a href="/pages/scheduler.html">
+                <button>Configurar Bomba</button>
+            </a><br><br>
+
+            <a href="/pages/mqtt.html">
+                <button>Configurar Conexión</button>
+            </a><br><br>
+        </nav>
+
+        <div id="content"></div>
+    </body>
+</html>

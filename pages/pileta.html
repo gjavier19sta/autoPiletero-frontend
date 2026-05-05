@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Configurar Pileta</title>
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="icon" type="image/png" href="/images/favicon.png">
+        <script src="https://unpkg.com/mqtt@5/dist/mqtt.min.js"></script>
+        <script src="/js/version.js"></script>
+        <script src="/js/tiempo.js"></script>
+        <script src="/js/api.js"></script>
+        <script src="/js/mqtt.js"></script>
+        <script src="/js/pileta.js"></script>
+        <script>window.onload = loadPiletaConfig();</script>
+    </head>
+
+    <body>
+        <h2>Configurar Pileta</h2>
+        <div class="card">
+            Hora <span id="horaDelDia">--:--:--</span>
+        </div>
+
+        <div class="card">
+            <b>Tamaño de la pileta</b><br><br>
+            Modo:
+            <select id="modoMedicion" onchange="onModoMedicionChange()">
+                <option value="litros">Litros directamente</option>
+                <option value="dimensiones">Dimensiones</option>
+            </select>
+            <br><br>
+
+            <!-- BLOQUE LITROS -->
+            <div id="bloqueListros">
+                Litros:
+                <input id="litros" type="number" min="1" placeholder="ej: 40000">
+                <br>
+            </div>
+
+            <!-- BLOQUE DIMENSIONES -->
+            <div id="bloqueDimensiones" style="display:none">
+                Largo (m): <input id="largo" type="number" min="0.1" step="0.1" placeholder="ej: 8"><br><br>
+                Ancho (m): <input id="ancho" type="number" min="0.1" step="0.1" placeholder="ej: 4"><br><br>
+                Profundidad (m): <input id="profundidad" type="number" min="0.1" step="0.1" placeholder="ej: 1.5"><br>
+                <br>
+                <span id="litrosCalculados"></span>
+            </div>
+        </div>
+
+        <div class="card" id="cardDosis" style="display:none">
+            <b>Dosis calculadas</b><br><br>
+            <table class="tablaDosis">
+                <tr>
+                    <th>Producto</th>
+                    <th>Dosis (ml)</th>
+                    <th>Tiempo bomba</th>
+                </tr>
+                <tr>
+                    <td>Cloro</td>
+                    <td id="dosisCloro">--</td>
+                    <td id="tiempoCloro">--</td>
+                </tr>
+                <tr>
+                    <td>Alguicida</td>
+                    <td id="dosisAlguicida">--</td>
+                    <td id="tiempoAlguicida">--</td>
+                </tr>
+                <tr>
+                    <td>Clarificante</td>
+                    <td id="dosisClarificante">--</td>
+                    <td id="tiempoClarificante">--</td>
+                </tr>
+            </table>
+        </div>
+
+        <br>
+        <button onclick="calcular()">Calcular</button>
+        &nbsp;
+        <button id="btnGuardar" onclick="irAlScheduler()" disabled>Ir al Scheduler →</button>
+        <br><br>
+        <p id="statusMsg"></p>
+    </body>
+</html>

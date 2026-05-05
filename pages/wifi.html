@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración WiFi</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+    <script src="/js/version.js"></script>
+    <script src="/js/tiempo.js"></script>
+    <script src="/js/wifi.js"></script>
+    <script> window.onload = wifiInfo(); </script>
+</head>
+
+<body>
+    <div class="logo-container">
+        <img src="/images/logo.png" alt="Autopiletero Logo" class="main-logo">
+    </div>
+    <h1>Configurar WiFi</h1>
+    <div class="card">
+        <span id="horaDelDia">--:--:--</span><br>
+    </div>
+    <div class="card">
+        <button onclick="loadNetworks()">Escanear redes</button><br><br>
+
+        <div id="networks"></div>
+
+        SSID:<br>
+        <input type="text" name="ssid" id="ssid"><br><br>
+
+        Password:<br>
+        <input type="password" name="password" id="password"><br><br>
+
+        <button onclick="saveWifi()">Guardar</button>
+    </div>
+    </br></br></br>
+    <p id="statusMsg"></p>
+
+</body>
+
+</html>

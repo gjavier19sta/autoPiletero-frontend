@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Estado Actual</title>
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="icon" type="image/png" href="/images/favicon.png">
+        <script src="https://unpkg.com/mqtt@5/dist/mqtt.min.js"></script>
+        <script src="/js/version.js"></script>
+        <script src="/js/tiempo.js"></script>
+        <script src="/js/api.js"></script>
+        <script src="/js/mqtt.js"></script>
+        <script src="/js/dashboard.js"></script>
+        <script>window.onload = dashInfo();</script>
+    </head>
+
+    <body>
+        <div class="logo-container">
+            <img src="/images/logo.png" alt="Autopiletero Logo" class="main-logo">
+        </div>
+        <h2>Estado Actual</h2>
+
+        <div class="card">
+            <span id="horaDelDia">--:--:--</span>
+            &nbsp;&nbsp;
+            Dispositivo: <span id="deviceStatus" style="color:gray;">● --</span>
+        </div>
+
+        <!-- ── Bomba Cloro ── -->
+        <div class="card">
+            <h3>Bomba Cloro</h3>
+            Estado: <span id="estadoBombaCloro">OFF</span><br>
+            Flujo: <span id="flujoBombaCloro">--</span> ml/min<br><br>
+            Dosificacion:
+            <input id="duracionDosificacionCloro" type="number">
+            <select id="dosificacionModeCloro">
+                <option value="mililitro">ml</option>
+                <option value="segundo">seg</option>
+            </select>
+            <br><br>
+            <button onclick="dosificar(1)">Dosificar Cloro</button>
+        </div>
+
+        <!-- ── Bomba Alguicida ── -->
+        <div class="card">
+            <h3>Bomba Alguicida</h3>
+            Estado: <span id="estadoBombaAlguicida">OFF</span><br>
+            Flujo: <span id="flujoBombaAlguicida">--</span> ml/min<br><br>
+            Dosificacion:
+            <input id="duracionDosificacionAlguicida" type="number">
+            <select id="dosificacionModeAlguicida">
+                <option value="mililitro">ml</option>
+                <option value="segundo">seg</option>
+            </select>
+            <br><br>
+            <button onclick="dosificar(2)">Dosificar Alguicida</button>
+        </div>
+
+        <!-- ── Bomba Clarificante ── -->
+        <div class="card">
+            <h3>Bomba Clarificante</h3>
+            Estado: <span id="estadoBombaClarificante">OFF</span><br>
+            Flujo: <span id="flujoBombaClarificante">--</span> ml/min<br><br>
+            Dosificacion:
+            <input id="duracionDosificacionClarificante" type="number">
+            <select id="dosificacionModeClarificante">
+                <option value="mililitro">ml</option>
+                <option value="segundo">seg</option>
+            </select>
+            <br><br>
+            <button onclick="dosificar(3)">Dosificar Clarificante</button>
+        </div>
+
+        <br><br><br>
+        <p id="statusMsg"></p>
+    </body>
+</html>

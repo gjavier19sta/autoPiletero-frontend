@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+/* body {
+  font-family: Arial;
+  text-align: center;
+} */
+
+.card {
+  border: 1px solid #ccc;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#clock {
+  font-size: 2em;
+}
+
+.tablaWifi {
+    border-collapse: collapse;
+    margin: 20px auto;
+    min-width: 250px;
+}
+
+.tablaWifi th, 
+.tablaWifi td {
+    text-align: center;
+    border: 1px solid black;
+    padding: 6px;
+}
+.tablaWifi th {
+    background-color: #f0f0f0;
+}
+
+.tablaWifi tr:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
+
+/* Tabla de dosis */
+.tablaDosis {
+    border-collapse: collapse;
+    margin: 10px auto;
+    min-width: 280px;
+}
+ 
+.tablaDosis th,
+.tablaDosis td {
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+}
+ 
+.tablaDosis th {
+    background-color: #f0f0f0;
+}
+
+/* Estilo básico para mostrar el icono web */
+.logo-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.main-logo {
+    width: 100px; /* Ajusta el tamaño que quieras */
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}

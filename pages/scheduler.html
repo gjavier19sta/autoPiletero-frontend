@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Configurar Dosificacion</title>
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="icon" type="image/png" href="/images/favicon.png">
+        <script src="https://unpkg.com/mqtt@5/dist/mqtt.min.js"></script>
+        <script src="/js/version.js"></script>
+        <script src="/js/tiempo.js"></script>
+        <script src="/js/api.js"></script>
+        <script src="/js/mqtt.js"></script>
+        <script src="/js/scheduler.js"></script>
+        <script>window.onload = loadConfig();</script>
+        <style>
+            .tab-bar { display: flex; gap: 6px; margin: 10px; }
+            .tab-btn {
+                flex: 1; padding: 8px; border: 1px solid #ccc;
+                background: #f0f0f0; border-radius: 6px; cursor: pointer; font-size: 0.9em;
+            }
+            .tab-btn.active { background: #2196F3; color: white; border-color: #2196F3; }
+        </style>
+    </head>
+
+    <body>
+        <div class="logo-container">
+            <img src="/images/logo.png" alt="Autopiletero Logo" class="main-logo">
+        </div>
+        <h2>Configurar Dosificacion</h2>
+
+        <div class="card">
+            Hora <span id="horaDelDia">--:--:--</span>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('Cloro')">Cloro</button>
+            <button class="tab-btn"        onclick="showTab('Alguicida')">Alguicida</button>
+            <button class="tab-btn"        onclick="showTab('Clarificante')">Clarificante</button>
+        </div>
+
+        <!-- ── Tab Cloro ── -->
+        <div id="tab-Cloro">
+            <div class="card">
+                <br>
+                Dosificacion:
+                <input id="duracionDosificacionCloro" type="number">
+                <select id="dosificacionModeCloro" onchange="onDosimodeChangeSuffix('Cloro')">
+                    <option value="mililitro">ml</option>
+                    <option value="segundo">seg</option>
+                </select>
+                <p id="dosisMsgCloro"></p>
+            </div>
+            <div class="card">
+                Modo:
+                <select id="modeCloro" onchange="onModeChangeSuffix('Cloro')">
+                    <option value="INTERVAL">Intervalo</option>
+                    <option value="TIME">Hora fija</option>
+                </select>
+                <div id="intervalBlockCloro">
+                    <br>
+                    Intervalo (min): <input id="intervalCloro" type="number"><br>
+                    <button onclick="setupInterval('Cloro', 1)">Guardar</button>
+                </div>
+                <div id="timeBlockCloro" style="display:none">
+                    <br>
+                    Hora [24h]: <input id="hourCloro" type="number" min="0" max="23"><br><br>
+                    Minuto: <input id="minuteCloro" type="number" min="0" max="59"><br><br>
+                    <button onclick="setTime('Cloro', 1)">Guardar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Tab Alguicida ── -->
+        <div id="tab-Alguicida" style="display:none">
+            <div class="card">
+                <br>
+                Dosificacion:
+                <input id="duracionDosificacionAlguicida" type="number">
+                <select id="dosificacionModeAlguicida" onchange="onDosimodeChangeSuffix('Alguicida')">
+                    <option value="mililitro">ml</option>
+                    <option value="segundo">seg</option>
+                </select>
+                <p id="dosisMsgAlguicida"></p>
+            </div>
+            <div class="card">
+                Modo:
+                <select id="modeAlguicida" onchange="onModeChangeSuffix('Alguicida')">
+                    <option value="INTERVAL">Intervalo</option>
+                    <option value="TIME">Hora fija</option>
+                </select>
+                <div id="intervalBlockAlguicida">
+                    <br>
+                    Intervalo (min): <input id="intervalAlguicida" type="number"><br>
+                    <button onclick="setupInterval('Alguicida', 2)">Guardar</button>
+                </div>
+                <div id="timeBlockAlguicida" style="display:none">
+                    <br>
+                    Hora [24h]: <input id="hourAlguicida" type="number" min="0" max="23"><br><br>
+                    Minuto: <input id="minuteAlguicida" type="number" min="0" max="59"><br><br>
+                    <button onclick="setTime('Alguicida', 2)">Guardar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Tab Clarificante ── -->
+        <div id="tab-Clarificante" style="display:none">
+            <div class="card">
+                <br>
+                Dosificacion:
+                <input id="duracionDosificacionClarificante" type="number">
+                <select id="dosificacionModeClarificante" onchange="onDosimodeChangeSuffix('Clarificante')">
+                    <option value="mililitro">ml</option>
+                    <option value="segundo">seg</option>
+                </select>
+                <p id="dosisMsgClarificante"></p>
+            </div>
+            <div class="card">
+                Modo:
+                <select id="modeClarificante" onchange="onModeChangeSuffix('Clarificante')">
+                    <option value="INTERVAL">Intervalo</option>
+                    <option value="TIME">Hora fija</option>
+                </select>
+                <div id="intervalBlockClarificante">
+                    <br>
+                    Intervalo (min): <input id="intervalClarificante" type="number"><br>
+                    <button onclick="setupInterval('Clarificante', 3)">Guardar</button>
+                </div>
+                <div id="timeBlockClarificante" style="display:none">
+                    <br>
+                    Hora [24h]: <input id="hourClarificante" type="number" min="0" max="23"><br><br>
+                    Minuto: <input id="minuteClarificante" type="number" min="0" max="59"><br><br>
+                    <button onclick="setTime('Clarificante', 3)">Guardar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="text-align:center; margin-top:10px;">
+            <button onclick="guardarTodo()" style="background:#4CAF50;color:white;padding:12px 28px;font-size:1em;border:none;border-radius:8px;cursor:pointer;">
+                Guardar Todo
+            </button>
+            <br><small style="color:#666;">Persiste la configuración de las 3 bombas a la vez</small>
+        </div>
+
+        <br><br><br>
+        <p id="statusMsg"></p>
+    </body>
+</html>

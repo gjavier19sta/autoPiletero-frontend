@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Configurar Conexión</title>
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="icon" type="image/png" href="/images/favicon.png">
+        <script src="https://unpkg.com/mqtt@5/dist/mqtt.min.js"></script>
+        <script src="/js/version.js"></script>
+        <script src="/js/tiempo.js"></script>
+        <script src="/js/api.js"></script>
+        <script src="/js/mqtt.js"></script>
+        <script>window.onload = loadMqttPage();</script>
+    </head>
+
+    <body>
+        <div class="logo-container">
+            <img src="/images/logo.png" alt="Autopiletero Logo" class="main-logo">
+        </div>
+        <h2>Configurar Conexión</h2>
+
+        <div class="card">
+            <p style="font-size:0.85em; color:#555;">
+                Credenciales del broker MQTT HiveMQ para esta web app.<br>
+                Se guardan en el navegador (localStorage). No se envían al dispositivo.
+            </p>
+            Estado: <span id="connectionBadge">● --</span>
+        </div>
+
+        <div class="card">
+            <b>Broker HiveMQ Cloud</b><br><br>
+
+            Host:<br>
+            <input id="mqttHost" type="text" placeholder="ej: abc123.s1.eu.hivemq.cloud"
+                   style="width:100%;box-sizing:border-box;"><br><br>
+
+            Puerto WSS:<br>
+            <input id="mqttPort" type="number" value="8884"><br><br>
+
+            Usuario:<br>
+            <input id="mqttUser" type="text"><br><br>
+
+            Contraseña:<br>
+            <input id="mqttPass" type="password" placeholder="(dejar vacío para no cambiar)"><br><br>
+
+            <button onclick="guardarMqtt()">Guardar y conectar</button>
+        </div>
+
+        <br><br><br>
+        <p id="statusMsg"></p>
+    </body>
+</html>
